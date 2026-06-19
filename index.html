@@ -1841,6 +1841,13 @@ fill="currentColor"/>
   var eyebrow=heroType.querySelector('.eyebrow');
   var nextCert=document.querySelector('.home-hero-next-race-w');
   var horiz=document.querySelector('.s.is-horizontal-track');
+  var bgMarquee = document.querySelector('.aq-bg-marquee');
+  var header = document.querySelector('.aq-stage-header');
+  var s1 = document.querySelector('.aq-marquee-text-1');
+  var s2 = document.querySelector('.aq-marquee-text-2');
+  var t1 = document.querySelector('.aq-marquee-track-1');
+  var t2 = document.querySelector('.aq-marquee-track-2');
+
   var clamp=function(v){ return v<0?0:v>1?1:v; };
   var hTop=0, hLen=0, pBase=null, nBase=null;
   // EYE_RATIO: vertical position of the eye-line within the portrait,
@@ -1851,13 +1858,39 @@ fill="currentColor"/>
     var vh=window.innerHeight, y=window.scrollY||window.pageYOffset;
     hTop=vh*2.9; hLen=vh*3.6;
     if(horiz){ var r=horiz.getBoundingClientRect(); if(y<vh){ hTop=r.top+y; hLen=r.height; } }
-    if(y<vh*0.05){ // hero transforms are at identity near the top → true base rects
-      if(portrait){ var pr=portrait.getBoundingClientRect(); if(pr.height>100) pBase=pr; }
-      if(name){ var nr=name.getBoundingClientRect(); if(nr.height>10) nBase=nr; }
+    
+    // Reset transforms temporarily before taking bounding box measurements to prevent reload-scroll bugs
+    if(portrait) {
+      var oldSx = portrait.style.getPropertyValue('--sx');
+      var oldSy = portrait.style.getPropertyValue('--sy');
+      var oldSc = portrait.style.getPropertyValue('--sc');
+      portrait.style.removeProperty('--sx');
+      portrait.style.removeProperty('--sy');
+      portrait.style.removeProperty('--sc');
+      
+      var pr = portrait.getBoundingClientRect();
+      if(pr.height > 100) pBase = pr;
+      
+      if(oldSx) portrait.style.setProperty('--sx', oldSx);
+      if(oldSy) portrait.style.setProperty('--sy', oldSy);
+      if(oldSc) portrait.style.setProperty('--sc', oldSc);
     }
-    // Measure marquee widths for seamless looping
-    var s1 = document.querySelector('.aq-marquee-text-1');
-    var s2 = document.querySelector('.aq-marquee-text-2');
+    if(name) {
+      var oldNsx = name.style.getPropertyValue('--nsx');
+      var oldNsy = name.style.getPropertyValue('--nsy');
+      var oldNsc = name.style.getPropertyValue('--nsc');
+      name.style.removeProperty('--nsx');
+      name.style.removeProperty('--nsy');
+      name.style.removeProperty('--nsc');
+      
+      var nr = name.getBoundingClientRect();
+      if(nr.height > 10) nBase = nr;
+      
+      if(oldNsx) name.style.setProperty('--nsx', oldNsx);
+      if(oldNsy) name.style.setProperty('--nsy', oldNsy);
+      if(oldNsc) name.style.setProperty('--nsc', oldNsc);
+    }
+
     if (s1) w1 = s1.offsetWidth || w1;
     if (s2) w2 = s2.offsetWidth || w2;
   }
@@ -1947,9 +1980,6 @@ fill="currentColor"/>
     if(nextCert) nextCert.style.opacity=(1-e).toFixed(3);
 
     // ── 4.5. CUSTOM STAGE EFFECTS (GREEN OVERLAY, MARQUEE & HEADER ABOVE CUTOUT)
-    var header = document.querySelector('.aq-stage-header');
-    var bgMarquee = document.querySelector('.aq-bg-marquee');
-
     if (header) {
       header.style.setProperty('--win-h', curH.toFixed(1) + 'px');
       header.style.transform = 'translate3d(0, ' + (-rise_dom).toFixed(1) + 'px, 0)';
@@ -2009,13 +2039,10 @@ fill="currentColor"/>
     var step = 0.8 + Math.min(smoothVel * 0.16, 7.0); // clamp max boost to avoid crazy speeds
     autoX += step;
 
-    var bgMarquee = document.querySelector('.aq-bg-marquee');
-    if (bgMarquee) {
-      var shiftL = -(autoX % w1);
-      var shiftR = -(w2 - (autoX % w2));
-      bgMarquee.style.setProperty('--shift-l', shiftL.toFixed(1) + 'px');
-      bgMarquee.style.setProperty('--shift-r', shiftR.toFixed(1) + 'px');
-    }
+    var shiftL = -(autoX % w1);
+    var shiftR = -(w2 - (autoX % w2));
+    if (t1) t1.style.transform = 'translate3d(' + shiftL.toFixed(1) + 'px, 0, 0)';
+    if (t2) t2.style.transform = 'translate3d(' + shiftR.toFixed(1) + 'px, 0, 0)';
 
     // Wrap apply so any future error in the gather math doesn't silently
     // kill the rAF loop — that bug previously left the cutout frozen
