@@ -95,47 +95,25 @@ _iub.csConfiguration = {"lang":"en","preferenceCookie":{"expireAfter":180},"site
     -webkit-mask-composite:xor; mask-composite:exclude; }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&display=swap" rel="stylesheet"/><style id="aq-font-override">[class*="brier" i]{font-family:'Fraunces',Georgia,serif !important;}</style><style id="aq-declone">
-  /* montage photos → neutral placeholder frames (your images drop in later) */
-  .horizontal-item-img-w{ background:rgba(128,128,128,.06) !important; outline:1px solid rgba(128,128,128,.22); border-radius:3px; }
   /* hide fullscreen-menu photo collage, socials phone mockup, footer partner strip */
   .nav-menu-images-w{ display:none !important; }
   .callout-socials-card-layout, .callout-socials-rive-w{ display:none !important; }
   .footer-marquee{ display:none !important; }
-  /* ── Strip all remaining Lando photos (montage, OTOT, menu, socials, footer) ── */
+  /* ── Strip all remaining Lando photos (menu, socials, footer) ── */
   img[src*="website-files.com"], img[srcset*="website-files.com"]{ opacity:0 !important; }
-  /* OTOT split helmet/face + footer giant helmet (GL/Rive, not <img>) */
-  .otot-img-w, .otot-home-img, [data-gl="carousel"], .footer-bg-helmet-w, .footer-bg-helmet-layout{ display:none !important; }
-  /* ── Hall of Fame: helmets → typographic badge/project cards ── */
-  .helmet-grid-item-img-helmet, .helmet-grid-item-reveal-img{ opacity:0 !important; }
-  .helmet-grid-item-w{ position:relative; }
-  .helmet-grid-item-text-w{ position:absolute !important; inset:0; display:flex !important;
-    flex-direction:column; align-items:center; justify-content:center; text-align:center;
-    padding:22px; gap:8px; z-index:5; pointer-events:none; }
-  .helmet-grid-item-text-w .text{ font-family:'Mona Sans',sans-serif; font-weight:700;
-    font-size:clamp(15px,1.7vw,22px); line-height:1.08; letter-spacing:-.02em;
-    text-transform:uppercase; color:var(--color--white,#f4f4ed); }
-  .helmet-grid-item-date-w .date{ opacity:.5; font-family:'JetBrains Mono',ui-monospace,monospace;
-    font-size:11px; letter-spacing:.1em; color:var(--color--white,#f4f4ed); }
-  .helmet-grid-item-date-w .date{ opacity:.5; font-family:'JetBrains Mono',ui-monospace,monospace;
-    font-size:11px; letter-spacing:.1em; color:var(--color--white,#f4f4ed); }
-  /* ── Featured project: hide Lando merch, show demo card ── */
-  .exe-cta-img-w, .exe-cta-sticker-w{ display:none !important; }
-  .aq-demo-card{ display:block; width:100%; max-width:520px; border-radius:16px; overflow:hidden;
-    background:#15161a; border:1px solid rgba(255,255,255,.1); text-decoration:none;
-    transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s; box-shadow:0 20px 60px rgba(0,0,0,.22); }
-  .aq-demo-card:hover{ transform:translateY(-4px); box-shadow:0 30px 80px rgba(0,0,0,.32); }
-  .aq-demo-bar{ display:flex; align-items:center; padding:12px 16px; background:#1f2024; border-bottom:1px solid rgba(255,255,255,.08); }
-  .aq-demo-bar span{ width:11px; height:11px; border-radius:50%; background:rgba(255,255,255,.25); margin-right:8px; }
-  .aq-demo-url{ margin-left:10px; font-family:'JetBrains Mono',ui-monospace,monospace; font-size:12px; color:rgba(244,244,237,.7); }
-  .aq-demo-body{ aspect-ratio:16/10; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;
-    background:radial-gradient(circle at 50% 40%, rgba(210,255,0,.12), transparent 60%); }
-  .aq-demo-play{ width:74px; height:74px; border-radius:50%; background:var(--color--lime,#d2ff00); color:#15161a;
-    display:grid; place-items:center; font-size:24px; padding-left:5px; transition:transform .4s cubic-bezier(.2,.8,.2,1); }
-  .aq-demo-card:hover .aq-demo-play{ transform:scale(1.08); }
-  .aq-demo-label{ font-family:'Mona Sans',sans-serif; font-weight:600; font-size:18px; color:#f4f4ed; }
+  /* footer giant helmet (GL/Rive, not <img>) */
+  .footer-bg-helmet-w, .footer-bg-helmet-layout{ display:none !important; }
   .home-collab-rive-w, .home-collab-rive{ display:none !important; }
   /* ── Hero: type-only (F1 3D head + helmet Rive removed) ── */
   canvas.gl, [data-gl="background"], .gl-background{ display:none !important; }
+  /* Hero GL photo carousel mount point. KEEP THIS RULE — do NOT delete.
+     The div.gl-carousel[data-gl="carousel"] element still lives in the hero markup
+     and is NOT part of the removed ON PLATFORM / OFF PLATFORM subtree, so the
+     selectors deleted with that section must not include it. The bundle mounts a
+     WebGL carousel of Lando Norris photography into it if left visible, which is
+     both an off-brand visual regression and an image-licensing exposure. The div
+     itself stays because the bundle queries for it; only its rendering is killed. */
+  [data-gl="carousel"]{ display:none !important; }
   .marquee-gl-rive-w, .base-helmet-rive{ display:none !important; }
   /* ── Kill remaining Lando Rive tells → on-brand SVG marks ── */
   /* Next-Cert card: F1 circuit track-map → cert progress ring */
@@ -306,6 +284,556 @@ _iub.csConfiguration = {"lang":"en","preferenceCookie":{"expireAfter":180},"site
     .aq-stage-header {
       top: calc(50% - (var(--win-h, 0px) / 2) - 68px);
       gap: 6px;
+    }
+  }
+
+  /* ── Horizontal track: two about-me panels ──
+     The OFF+BRAND bundle drives this section from the track's own width:
+     it sets sectionHeight = track.offsetWidth - innerWidth and tweens the
+     track by x: -(offsetWidth - innerWidth) over a scroll range equal to
+     that same section height — so translation is 1:1 with scroll, in px.
+     The tween starts at "top bottom" (section top at viewport bottom), so
+     the first 100vh of scroll is spent before the sticky wrapper engages.
+     Hence the geometry below: padding-left = 100vh is the lead-in that the
+     entry scroll eats, each panel is exactly one viewport wide, and
+     padding-right is 0 so there is nothing left to scroll past panel 2.
+     Net effect: panel 1 exactly fills the viewport at pin start, panel 2
+     exactly fills it at pin end, translation monotonic in between.
+     Desktop only — the bundle skips the horizontal rig below 992px and the
+     Webflow sheet stacks the track into a vertical column there. */
+  @media (min-width: 992px) {
+    .s.is-horizontal-track .horizontal-track {
+      padding-left: calc(var(--vh, 1vh) * 100); /* lead-in, consumed before pin start */
+      padding-right: 0;                         /* no dead space after panel 2 */
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .s.is-horizontal-track .horizontal-grid-col {
+      width: 100vw;
+      justify-content: center; /* column flex → vertical centring */
+    }
+    .s.is-horizontal-track .horizontal-item-w.is-text-callout {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding-inline: clamp(40px, 7vw, 150px);
+    }
+    .s.is-horizontal-track .horizontal-item-text {
+      max-width: 62vw; /* ~32 characters per line, constant from 1280–1920px */
+      font-size: clamp(2.1rem, 3.8vw, 4.8rem);
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+    }
+  }
+
+  /* Narrow / tablet: the track is a vertical column (Webflow ≤991px rules).
+     Keep each panel inside the viewport and drop the display type down. */
+  @media (max-width: 991px) {
+    .s.is-horizontal-track .horizontal-grid-col {
+      width: 100%;
+    }
+    .s.is-horizontal-track .horizontal-grid-col.large-img.is-home1 {
+      margin-top: 0; /* was a -7rem pull for the deleted montage images */
+    }
+    .s.is-horizontal-track .horizontal-item-w.is-text-callout {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+    .s.is-horizontal-track .horizontal-item-text {
+      max-width: 100%;
+      font-size: clamp(1.5rem, 5.6vw, 2.4rem);
+      line-height: 1.06;
+    }
+  }
+
+  /* ── Latest Work: heading → list gap ──
+     Arithmetic at 1440px: root font-size = clamp(992,100vw,1920)/1728*16
+     = 1440/1728*16 = 13.333px, so the retained .spacer._8-75rem.m-6rem is
+     8.75rem = 116.7px. The .title-layout.grid-main margin-bottom of
+     calc(var(--gap)*2) = 2.5rem only exists inside the Webflow
+     max-width:479px block, so it adds 0px at desktop and ~33px at ≤479px.
+     116.7px of dead space under a display heading reads as a hole, so the
+     spacer is pulled to ~65px at 1440px and 40px at phone widths. */
+  .c.home-helmets .spacer._8-75rem.m-6rem {
+    height: clamp(40px, 4.5vw, 72px);
+  }
+
+  /* ── Latest Work: Project List rows ──
+     Mid-tier type on purpose: the h2 "Latest Work" is the display element,
+     the rows sit one clear step below it. Names ~23px Mona Sans at 1440px,
+     labels ~13px JetBrains Mono — the same treatment the small right-hand
+     metadata elsewhere on the page uses.
+     Row box height at 1440px: 1.6vw = 23.04px font x 1.1 line-height
+     = 25.3px + 40px padding + 1px rule = 66.3px, inside the 56–96px band.
+     Separator: border-top on every row yields exactly one rule above the
+     first row, one between each adjacent pair, and none below the last.
+     Resting state only — the lime hover highlight and preview are task 6.1,
+     so nothing here is already lime. */
+  .aq-work-list {
+    position: relative;
+    width: 100%;
+  }
+
+  .aq-work-row {
+    position: relative; /* positioning context for the task 6.1 hover preview */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(16px, 4vw, 64px);
+    padding-block: 20px;
+    border-top: 1px solid rgba(244, 244, 237, 0.14); /* off-white @ 0.14 alpha, fallback */
+    border-top-color: color-mix(in srgb, var(--color--white, #f4f4ed) 14%, transparent);
+  }
+
+  .aq-work-name {
+    min-width: 0;
+    margin: 0;
+    font-family: 'Mona Sans', 'Mona Sans Variable', sans-serif;
+    font-size: clamp(20px, 1.6vw, 28px);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    overflow-wrap: break-word;
+    color: var(--color--white, #f4f4ed);
+  }
+
+  .aq-work-label {
+    min-width: 0;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.9vw, 13px);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: right;
+    overflow-wrap: break-word;
+    color: rgba(244, 244, 237, 0.62); /* off-white @ 0.62 alpha, fallback */
+    color: color-mix(in srgb, var(--color--white, #f4f4ed) 62%, transparent);
+  }
+
+  /* ── Latest Work: row hover highlight (task 6.1) ──
+     Only the hovered row matches, so the other three keep their resting
+     colours with no extra state class and no script. 180ms < the 250ms
+     budget for both entry and exit. */
+  .aq-work-name,
+  .aq-work-label {
+    position: relative;
+    z-index: 2; /* text always paints above the preview card */
+    transition: color 180ms ease;
+  }
+
+  .aq-work-row:hover .aq-work-name,
+  .aq-work-row:hover .aq-work-label {
+    color: var(--color--lime, #d2ff00);
+  }
+
+  /* The separator above the hovered row lifts from 0.14 to 0.32 alpha —
+     the only cue beyond the colour change and the card. */
+  .aq-work-row {
+    transition: border-top-color 180ms ease;
+  }
+  .aq-work-row:hover {
+    border-top-color: rgba(244, 244, 237, 0.32);
+    border-top-color: color-mix(in srgb, var(--color--white, #f4f4ed) 32%, transparent);
+  }
+
+  /* ── Latest Work: Hover Preview card (task 6.1, static show/hide) ──
+     The card is a Media Placeholder at its FINAL occupied dimensions:
+     clamp(120px, 14vw, 220px) wide (inside the 120–260px band) on a fixed
+     16/10 box, the same aspect the .aq-stage-window uses. Because the box
+     is absolutely positioned and sized here, supplying a real screenshot
+     shifts nothing around it by 0px.
+
+     HOW TO DROP IN A REAL SCREENSHOT LATER (no CSS edit, no layout change):
+       inside .aq-work-preview-inner, add as the LAST child
+         <img class="aq-work-preview-img" src="/img/sharp-mini.webp" alt="">
+       Keep alt="" — the card is aria-hidden and the row text already
+       carries the name and discipline (req 5.9). The img is absolutely
+       positioned over the initials by the rule below, so the typographic
+       mark simply stops being visible. Nothing else changes: same outer
+       box, same dimensions, same position, same siblings.
+
+     Positioned dead centre of the row: the row is space-between, so the
+     middle is the natural gap between the name's right edge and the
+     label's left edge. The card (~137px tall at 220px wide) is taller
+     than the ~66px row and deliberately overflows it vertically — see the
+     clipping note below. Task 6.2 adds the pointer-follow by writing
+     --aq-pv-x / --aq-pv-y, which this transform already reads, so no
+     transform rewrite is needed there.
+
+     Clipping audit for the ancestor chain
+     .aq-work-list → .c.home-helmets → .s.home-helmets → .s-group.bg-black
+     → .taxi-w → .main-w → .page-w[overflow-clip="x"]:
+     none of .aq-work-list, .c.home-helmets, .s.home-helmets, .s-group,
+     .taxi-w or .main-w sets any overflow value, so nothing near the rows
+     clips. .page-w is the only clipper: the inline [overflow-clip="x"]
+     rule sets overflow-x: clip, and the Webflow sheet sets the shorthand
+     overflow: clip (both axes). Either way the clip edge is .page-w's own
+     padding box, which is the full page — thousands of px away from these
+     rows vertically. So the card's ~35px vertical overflow of its row is
+     NOT clipped and no fix was needed. (For the record: overflow-x: clip
+     with overflow-y: visible does not blockify the other axis — `clip` is
+     the one non-visible value that may pair with `visible` — so the
+     attribute rule alone never creates a vertical clip either.) */
+  .aq-work-preview {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1; /* over the row separators, under the row text (z-index 2) */
+    width: clamp(120px, 14vw, 220px);
+    aspect-ratio: 16 / 10;
+    transform: translate(
+      calc(-50% + var(--aq-pv-x, 0px)),
+      calc(-50% + var(--aq-pv-y, 0px))
+    );
+    opacity: 0;
+    pointer-events: none; /* req 5.10 — never becomes the hover target */
+    transition: opacity 180ms ease;
+    will-change: transform, opacity;
+  }
+
+  .aq-work-row:hover .aq-work-preview {
+    opacity: 1;
+  }
+
+  /* ── Latest Work: scroll / window-blur suppression (task 6.2, req 5.12) ──
+     :hover cannot be cancelled from script: while the page scrolls under a
+     resting pointer, or while the window loses focus, the row stays :hover
+     and the card would stay up. The pointer-follow script adds
+     .is-suppressed to .aq-work-list on scroll or blur and removes it on the
+     next pointermove. Every property below already transitions over 180ms,
+     inside the 250ms budget. Specificity ties with the :hover rules above
+     (three simple selectors each) and wins on source order, so no
+     !important is needed. */
+  .aq-work-list.is-suppressed .aq-work-preview {
+    opacity: 0;
+  }
+  .aq-work-list.is-suppressed .aq-work-row:hover .aq-work-name {
+    color: var(--color--white, #f4f4ed);
+  }
+  .aq-work-list.is-suppressed .aq-work-row:hover .aq-work-label {
+    color: rgba(244, 244, 237, 0.62);
+    color: color-mix(in srgb, var(--color--white, #f4f4ed) 62%, transparent);
+  }
+  .aq-work-list.is-suppressed .aq-work-row:hover {
+    border-top-color: rgba(244, 244, 237, 0.14);
+    border-top-color: color-mix(in srgb, var(--color--white, #f4f4ed) 14%, transparent);
+  }
+
+  /* Near-black card with a restrained lime edge and inner glow. */
+  .aq-work-preview-inner {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: var(--color--grey-2, #15161a);
+    border: 1px solid rgba(210, 255, 0, 0.22);
+    border-color: color-mix(in srgb, var(--color--lime, #d2ff00) 22%, transparent);
+    box-shadow: inset 0 0 40px rgba(210, 255, 0, 0.08);
+  }
+
+  .aq-work-preview-mark {
+    font-family: 'Mona Sans', 'Mona Sans Variable', sans-serif;
+    font-size: clamp(26px, 2.6vw, 40px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--color--lime, #d2ff00);
+  }
+
+  /* Pre-wired for the deferred screenshots — see the swap note above. */
+  .aq-work-preview-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* No hover / coarse pointer, and Reduced Motion: the card is not shown
+     at all (req 5.8, 11.5), while the row highlight above still applies. */
+  @media (hover: none), (pointer: coarse) {
+    .aq-work-preview {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aq-work-preview {
+      display: none;
+    }
+  }
+
+  /* Narrow Viewport: label drops to its own line under the name, both
+     left-aligned, text wraps in full — no clipping, no ellipsis.
+     The row is a column here, so there is no middle gap for the card —
+     it is removed outright (req 11.4). */
+  @media (max-width: 767px) {
+    .aq-work-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      padding-block: 16px;
+    }
+    .aq-work-name {
+      font-size: clamp(18px, 5.4vw, 24px);
+    }
+    .aq-work-label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-align: left;
+    }
+    .aq-work-preview {
+      display: none;
+    }
+  }
+
+  /* ══ Research Section (task 7.4) ══════════════════════════════════════
+     BACKGROUND DECISION (req 6.5 / 6.6): this block declares NO background
+     for .s.is-lando-exe and authors NO curve. Reasons:
+       · The top edge is already the pre-existing .exe-top-visor
+         (ellipse(70% 100% at 50% 0), 8rem tall, black, z-index 0). Req 6.6
+         forbids a new clip-path / mask / SVG / pseudo-element curve, and
+         nothing below touches that rule.
+       · The section is transparent over the #bgCanvas shader, which is in
+         its light phase here (task 9 pins window.__bgDark to exactly 0.0 at
+         and past the end of the horizontal track, well above this section).
+         So the section already reads light, and the dark section above meets
+         it exactly at the visor edge — one painted edge, zero gap/overlap by
+         construction at every width from 320 to 1920px.
+       · Painting an opaque light fill here would cut a hard rectangle out of
+         the shader that the rest of the page scrolls through, and would
+         re-introduce a seam risk at the visor. Transparency is the correct
+         answer; the shader guarantees the lightness.
+
+     HEADING CLEARANCE (the trap flagged in the markup comment): the visor is
+     an ellipse anchored `at 50% 0`, so at the horizontal centre it reaches
+     its full 8rem depth — exactly the height of the .spacer.is-exe above the
+     heading. Both are 8rem, so the spacer buys 0px of clearance for the
+     centered h2 no matter what the fluid root font-size is. The padding-top
+     below is therefore pure clearance on top of the curve's lowest point:
+     93.6px at 1440px (8rem = 106.7px spacer over a 106.7px visor, heading
+     box top at 200.3px), 112px at 1920px, 56px at 768px. Floor is 56px so
+     the heading never crowds the curve on tablet.
+
+     It also satisfies req 6.10: even with zero rendered row content the
+     section keeps this padding plus the two 8rem spacers, so it can never
+     collapse to 0px and the visor always paints. */
+  .aq-research {
+    position: relative;
+    padding-top: clamp(56px, 6.5vw, 112px);
+    /* Desktop stagger amounts, read by the row rules below.
+       --aq-res-lift  : how far the text sits BELOW its row's top edge, which
+                        is how far the media placeholder sits ABOVE the text
+                        top (req 7.3 needs 40–120px).
+       --aq-res-gap   : space between row 1's bottom and row 2's top. Row 1's
+                        height is driven by its media card (always the taller
+                        item at every width ≥768px), so this value IS the
+                        distance from row 1's media bottom to row 2's media
+                        top (req 7.4 needs 40–120px).
+       clamp floors at 48px and caps at 96px, so both stay inside 40–120px
+       across 768–1920px: 48px at 768px, 72px at 1440px, 96px at 1920px. */
+    --aq-res-lift: clamp(48px, 5vw, 96px);
+    --aq-res-gap: clamp(48px, 5vw, 96px);
+  }
+
+  .aq-research-head {
+    text-align: center;
+    margin-bottom: clamp(40px, 5vw, 88px);
+  }
+
+  /* ≥768px: two equal halves. minmax(0, 1fr) rather than 1fr so a long word
+     can never push the grid wider than the container (no horizontal
+     overflow). align-items: start keeps each item at its own natural height
+     instead of stretching, which is what makes the stagger measurable. */
+  .aq-research-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(32px, 4vw, 72px);
+    align-items: start;
+  }
+
+  .aq-research-row + .aq-research-row {
+    margin-top: var(--aq-res-gap);
+  }
+
+  /* The lift is applied to the TEXT, not as a negative pull on the media, so
+     nothing reaches up into the heading or the visor. Media top = row top,
+     text top = row top + lift, therefore media top is `lift` px above text
+     top in both rows. */
+  .aq-research-text {
+    min-width: 0;
+    margin-top: var(--aq-res-lift);
+  }
+
+  /* Row 1: text left / media right (document order, no swap needed).
+     Row 2: media left / text right — `order` re-orders the grid items while
+     the DOM stays text-then-media, which is what lets the <768px stack in
+     req 7.12 / 11.2 work with a plain `order` reset and no markup change. */
+  .aq-research-row.is-research-1 .aq-research-media {
+    margin-left: auto; /* holds the card against the right edge at ≥1920px,
+                          where max-width stops it filling the column */
+  }
+
+  .aq-research-row.is-research-2 .aq-research-text {
+    order: 2;
+  }
+
+  .aq-research-row.is-research-2 .aq-research-media {
+    order: 1;
+  }
+
+  /* ── Type (req 7.13) ──
+     Mid-tier name + small mono descriptor, the same pairing as the Project
+     List rows, one clear step under the h2.
+     Contrast against the light shader background #F4F4ED:
+       name  #282c20 on #F4F4ED → 12.9:1
+       descr #3b3c38 on #F4F4ED → 10.1:1
+     Both far past 4.5:1. Deliberately NOT lime: lime fails on this
+     background, as task 7.3 already recorded. */
+  .aq-research-name {
+    margin: 0 0 10px;
+    font-family: 'Mona Sans', 'Mona Sans Variable', sans-serif;
+    font-size: clamp(22px, 1.9vw, 28px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--color--dark-green, #282c20);
+  }
+
+  /* ── Descriptor one-line guard (req 7.14) ──
+     Both descriptors are short ("Mixed-Methods HCI Study" 23 chars,
+     "Physiological Computing Research" 32 chars) and do not wrap at any
+     width 320–1920px at these sizes, but the guard is unconditional anyway.
+
+     Two-class selector on purpose: the body's css-split-type block sets
+     `[split-text] { white-space: pre-line }` and, being later in document
+     order, it would beat a single-class rule on the same specificity. The
+     `.aq-research .aq-research-type` pair (0,2,0) wins on specificity, so no
+     !important is needed.
+
+     Accessibility: text-overflow: ellipsis is a purely visual truncation —
+     it does not remove or alter text in the accessibility tree, so the full
+     descriptor string stays available to assistive technology with no
+     aria-label, no visually-hidden duplicate, and no title attribute.
+     Confirmed: the element's text node is untouched. */
+  .aq-research .aq-research-type {
+    min-width: 0;
+    max-width: 100%;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.9vw, 13px);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color--dark-green-tint-1, #3b3c38);
+  }
+
+  /* The bundle wraps split text in .line children (inline-block, width:auto
+     via the [data-anim-high] .line rule); cap them so the clip above holds
+     after the split runs. */
+  .aq-research .aq-research-type .line {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Media Placeholders (req 7.5, 7.6, 12.5, 12.6) ──
+     The ratio lives here, on the outer element, so the box has its FINAL
+     occupied dimensions with no image present: aspect-ratio 16/9 on a column
+     -width box capped at 640px. Widths: 545 x 306 at 1440px (47.5% of the
+     container), 640 x 360 at 1920px (42%), 357 x 201 at 768px. Because the
+     height is derived from the ratio and never from content, dropping in an
+     image shifts nothing by 0px.
+
+     MEDIA SWAP PROCEDURE (deferred asset — no CSS edit, no layout change):
+       inside .aq-research-media-inner, add as the LAST child
+         <img class="aq-research-media-img" src="/img/smart-home.webp" alt="">
+       Keep alt="" — .aq-research-media is aria-hidden and the row's h3 plus
+       descriptor already carry all the information (req 7.7). The
+       .aq-research-media-img rule below is pre-written (absolute, inset 0,
+       object-fit: cover), so the image paints over the typographic mark and
+       the mark simply stops being visible. Same outer box, same dimensions,
+       same sibling positions, zero other markup and zero CSS changes. */
+  .aq-research-media {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    aspect-ratio: 16 / 9;
+  }
+
+  .aq-research-media-inner {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden; /* clips the swapped-in image to the radius */
+    border-radius: 24px; /* all four corners, inside the 16–32px band */
+    background-color: var(--color--dark-green, #282c20);
+  }
+
+  /* Placeholder mark kept deliberately quiet — it is scaffolding, not a
+     design feature. Low-contrast grey on the dark fill, small, wide-tracked,
+     and inside an aria-hidden card so it is never announced. */
+  .aq-research-media-mark {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.85vw, 13px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color--grey-2, #c8cbbd);
+    opacity: 0.45;
+  }
+
+  /* Pre-wired for the deferred image — see the swap procedure above. */
+  .aq-research-media-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Narrow Viewport (req 7.12, 11.2, 11.3) ──
+     One full-width column, text above its media placeholder in both document
+     and visual order (the `order` values from row 2 are reset, and the DOM is
+     already text-then-media), zero stagger, row order preserved. */
+  @media (max-width: 767px) {
+    .aq-research {
+      --aq-res-lift: 0px;
+      --aq-res-gap: clamp(32px, 8vw, 56px);
+      padding-top: clamp(40px, 12vw, 64px);
+    }
+    .aq-research-head {
+      margin-bottom: clamp(28px, 8vw, 48px);
+    }
+    .aq-research-row {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: clamp(16px, 4vw, 24px);
+    }
+    .aq-research-row.is-research-1 .aq-research-media,
+    .aq-research-row.is-research-2 .aq-research-media {
+      order: 0;
+      margin-left: 0;
+      max-width: 100%;
+    }
+    .aq-research-row.is-research-2 .aq-research-text {
+      order: 0;
+    }
+    .aq-research-media-inner {
+      border-radius: 18px;
     }
   }
 </style></head><body data-edit=""><div class="css-main"><div class="css-root w-embed"><style>
@@ -800,69 +1328,8 @@ _iub.csConfiguration = {"lang":"en","preferenceCookie":{"expireAfter":180},"site
 
 
 </style></div><div class="css-home w-embed"><style>
-  /* --------------------------------------- HELMET SECTION */
-
-  [data-helmet-item] {
-    --mask-url: url('https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e2c781c4c953cd9e74eda5_ln4-2-helm-mask-fill.svg');
-
-    /* Apply the image mask using the variable */
-    -webkit-mask-image: var(--mask-url);
-    mask-image: var(--mask-url);
-
-    /* Additional mask settings */
-    -webkit-mask-size: cover;
-    mask-size: cover;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-  }
-  @media only screen and (max-width: 479px) {
-    [data-helmet-item] {
-      --mask-url: url('https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67eea130c0f25ef68ac8889e_ln4-helm-mob-refactor-lime-fill.svg');
-    }
-  }
-
   .home-hero-next-race-w {
     transition: clip-path var(--animation-default);
-  }
-
-  .helmet-grid-item-reveal-img {
-    transition: 
-      clip-path var(--animation-default),
-      transform var(--animation-default);
-  }
-
-  [data-helmet-item]:hover .helmet-grid-item-reveal-img {
-    clip-path: ellipse(100% 120% at 50% 0%);
-    transform: scale(1);
-  }
-
-  .helmet-grid-item-img-helmet {
-    transition: 
-      transform var(--animation-default);
-  }
-  .helmet-grid-item-w:hover .helmet-grid-item-img-helmet {
-    transform: scale(1.1);
-  }
-
-  .helmet-grid-frame.is-overlay,
-  .helmet-grid-extender-img.is-overlay {
-    transition: 
-      opacity var(--animation-default);
-  }
-
-  .helmet-grid-extender-img {
-    transition: 
-      color var(--animation-default);
-  }
-  .helmet-grid-item-w:hover .helmet-grid-extender-img {
-    color: var(--color--lime);
-  }
-
-  .helmet-grid-item-w:hover .helmet-grid-frame.is-overlay,
-  .helmet-grid-item-w:hover .helmet-grid-extender-img.is-overlay {
-    opacity: 1;
   }
 
   canvas[data-rive-object],
@@ -1460,157 +1927,7 @@ stroke="currentColor"/>
         data-rive-scrolltrigger-start=""
         data-rive-scrolltrigger-end=""
         >
-</canvas></div></div><div data-anim-high="right, lime" split-text="lines" class="text-eyebrow">salesforce trailblazer since 2022</div></div><div data-anim-high="right, lime-off" split-text="lines" class="text-impact-lg-mona"><strong>Automating</strong> orgs, shipping <strong>front-ends</strong>, bringing it all together. Building a <strong>craft</strong> in Salesforce on and off the platform.</div></div></div></section><section data-gl-change-to="white, dark-green-tint-1-low" data-horizontal-section="" data-h-color-from="dark-green" data-h-color-to="white" data-gl-change-track="" data-gl-change-from="dark-green, dark-green-tint-1" class="s is-horizontal-track"><div class="c is-horiz-scroll"><div class="horizontal-pin-wrap"><div class="horizontal-pin-spacer"><div class="horizontal-pin-sticky"><div class="horizontal-track"><div class="horizontal-grid-col"><div class="horizontal-item-w is-home-1"><div class="horizontal-item-layout is-home-1"><div class="eyebrow-w c-green-off-white-2"><div split-text="lines" class="text-eyebrow">Gujarat, 2024</div></div><div class="horizontal-item-img-w is-home-1"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baa04b14a1ca33c0b25_ln-home-horiz-1.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baa04b14a1ca33c0b25_ln-home-horiz-1-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baa04b14a1ca33c0b25_ln-home-horiz-1.webp 649w" alt="Lando in casual clothes walking through paddock" class="image is-horizontal-scroll"/></div></div></div><div class="horizontal-item-w is-home-2"><div class="horizontal-item-layout is-home-2"><div class="eyebrow-w c-green-off-white-2"><div split-text="lines" class="text-eyebrow">First Class with Distinction, 2024</div></div><div class="horizontal-item-img-w is-home-2"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baab12220595c8223b3_ln-home-horiz-2.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baab12220595c8223b3_ln-home-horiz-2-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baab12220595c8223b3_ln-home-horiz-2.webp 656w" alt="Lando lifting trophy in tux" class="image is-horizontal-scroll"/></div></div></div></div><div class="horizontal-grid-spacer"></div><div class="horizontal-grid-col large-img is-home1"><div class="horizontal-item-w is-text-callout callout-1"><div class="horizontal-item-layout"><div class="horizontal-item-text-layout"><div split-text="lines" class="horizontal-item-text">It doesn’t matter <span class="span-green-off-white-1">where</span> you start, it’s <span class="span-green-off-white-1">how</span> you progress from there.</div><div class="horizontal-rive-placeholder"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67cecea4e9d311047dcb51e5_ln4-hw-signature2.svg" loading="lazy" alt="Lando&#x27;s signature in lime color" class="image"/></div></div></div></div><div class="horizontal-item-w is-home3"><div class="horizontal-item-layout"><div class="eyebrow-w c-green-off-white-2"><div split-text="lines" class="text-eyebrow">8BIT Audio, 2024</div></div><div class="horizontal-item-img-w is-home3"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302babcf12f0111d96322e_ln-home-horiz-3.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302babcf12f0111d96322e_ln-home-horiz-3-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302babcf12f0111d96322e_ln-home-horiz-3-p-800.webp 800w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302babcf12f0111d96322e_ln-home-horiz-3-p-1080.webp 1080w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302babcf12f0111d96322e_ln-home-horiz-3.webp 1464w" alt="Lando lifting tophy" class="image is-horizontal-scroll"/></div></div></div></div><div class="horizontal-grid-spacer"></div><div class="horizontal-grid-col is-home-flip neg-margin"><div class="horizontal-item-w is-home-4 neg-margin"><div class="horizontal-item-layout"><div class="eyebrow-w c-green-off-white-2"><div split-text="lines" class="text-eyebrow">Platform Foundations, 2023</div></div><div class="horizontal-item-img-w is-home-5"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baa798e2cc6e02ac38a_ln-home-horiz-4.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baa798e2cc6e02ac38a_ln-home-horiz-4-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baa798e2cc6e02ac38a_ln-home-horiz-4.webp 529w" alt="Lando playing golf" class="image is-horizontal-scroll"/></div></div></div><div class="horizontal-item-w is-5"><div class="horizontal-item-layout is-home-5"><div class="eyebrow-w c-green-off-white-2"><div split-text="lines" class="text-eyebrow">Bauhaus-Universität, 2025</div></div><div class="horizontal-item-img-w is-home-4"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68da85d632bfefc552a0faac_Britain-25%20(1).webp" loading="lazy" width="Auto" alt="Lando in f1 car" class="image is-horizontal-scroll"/></div><div data-hide="m" class="horizontal-item-pill-w"><div class="horizontal-item-pill"><div class="horizontal-pill-box is-side"><div class="horizontal-pill-text">1</div></div><div class="horizontal-pill-box"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/680cbcfdbc4bdc0ef619369f_ln-icon-crossed-flags2.svg" loading="lazy" alt="" class="horizontal-pill-icon"/></div></div></div></div></div></div><div class="horizontal-grid-spacer half"></div><div class="horizontal-grid-col"><div class="horizontal-item-w is-home-6"><div class="horizontal-item-layout"><div class="eyebrow-w c-dark-green-tint-2"><div split-text="lines" class="text-eyebrow">SmartInternz, 2022</div></div><div class="horizontal-item-img-w is-home-6"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baa14a96f3cdd2f9a95_ln-home-horiz-6.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baa14a96f3cdd2f9a95_ln-home-horiz-6-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baa14a96f3cdd2f9a95_ln-home-horiz-6.webp 642w" alt="Lando holding dog smiling" class="image is-horizontal-scroll"/></div></div></div></div><div class="horizontal-grid-col"><div class="horizontal-item-w is-home-7"><div class="horizontal-item-layout is-home-7"><div class="eyebrow-w c-dark-green-tint-2"><div split-text="lines" class="text-eyebrow">Trailhead Expeditioner, 2025</div></div><div class="horizontal-item-img-w is-home-7"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302bab3ee6e26b1f434a7d_ln-home-horiz-7.webp" loading="lazy" alt="Lando in tux" class="image is-horizontal-scroll"/></div></div></div></div><div class="horizontal-grid-spacer half"></div><div class="horizontal-grid-col"><div class="horizontal-item-w is-home-8 neg-margin"><div class="horizontal-item-layout"><div class="eyebrow-w c-dark-green-tint-2"><div split-text="lines" class="text-eyebrow">Ahmedabad, 2024</div></div><div class="horizontal-item-img-w is-home8"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baaedf821dd2e3a7c74_ln-home-horiz-8.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baaedf821dd2e3a7c74_ln-home-horiz-8-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baaedf821dd2e3a7c74_ln-home-horiz-8-p-800.webp 800w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baaedf821dd2e3a7c74_ln-home-horiz-8-p-1080.webp 1080w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302baaedf821dd2e3a7c74_ln-home-horiz-8.webp 1461w" alt="Lando taking photo out of a plane" class="image is-horizontal-scroll"/></div></div></div><div class="horizontal-item-w is-text-callout is-home-callout-2"><div class="horizontal-item-layout"><div class="horizontal-item-text-layout"><div split-text="lines" class="horizontal-item-text c-dark-green-tint-1">Since my first lines of Java back in Gujarat, I’ve worked steadily to turn curiosity about how things work into a craft.</div><div class="horizontal-rive-placeholder"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e7eeaf67d51519b546828d_ln4-signature-dark-green.webp" loading="lazy" alt="" class="image"/></div></div></div></div></div><div class="horizontal-grid-spacer"></div><div class="horizontal-grid-col neg-margin"><div class="horizontal-item-w is-home10"><div class="horizontal-item-layout is-home10"><div class="eyebrow-w c-dark-green-tint-2"><div split-text="lines" class="text-eyebrow">visnagar, 2020</div></div><div class="horizontal-item-img-w is-home10"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302babb87c5f19ec131093_ln-home-horiz-9.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302babb87c5f19ec131093_ln-home-horiz-9-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302babb87c5f19ec131093_ln-home-horiz-9.webp 761w" alt="Lando lifting trophy" class="image is-horizontal-scroll"/></div></div></div><div class="horizontal-item-w is-home9 neg-margin"><div class="horizontal-item-layout"><div class="eyebrow-w c-dark-green-tint-2"><div split-text="lines" class="text-eyebrow">Weimar, 2025</div></div><div class="horizontal-item-img-w is-home9"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302bab4f762cdbc5e93415_ln-home-horiz-10.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302bab4f762cdbc5e93415_ln-home-horiz-10-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302bab4f762cdbc5e93415_ln-home-horiz-10.webp 659w" alt="Lando celebrating a win" class="image is-horizontal-scroll"/></div></div></div></div></div></div></div></div></div><div data-nav-theme-target="dark" class="sticky-track-theme-change"></div></section><div data-otot-section="" class="sticky-track is-home-otot"><div class="sticky-item"><section data-otot-top="" data-designmode-white="" class="s is-otot-home"><div class="c is-otot-home"><div class="otot-home-inner"><div class="otot-home-layout"><div class="otot-home-text-col is-1"><div class="otot-home-text-w"><h2 data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-impact-reg-brier">ON<br/></h2><h2 data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-impact-reg-mona line-increase">PLATFORM</h2><div class="otot-home-text-rive w-embed"><canvas data-rive-object
-        data-rive-file="phrases"
-        data-rive-artboard="phrase_on"
-        data-rive-state-machine="phrase_on" 
-        data-rive-fit="contain"  
-        data-rive-scrolltrigger="true"
-        data-rive-scrolltrigger-start="top center"
-        >
-</canvas></div></div><div class="otot-home-p-w"><p split-text="lines" data-anim-high="right, dark-green-tint-1, 200" class="text-body-reg-mona">Certifications, <strong>superbadges</strong>, flows and dashboards — the Salesforce side of the story.</p></div><div class="btn-auto-top"><a title="On Platform" data-btn-rive-rotate="true" data-btn-rive-hover="" href="https://www.salesforce.com/trailblazer/iamqavi" class="btn-w icon-only w-inline-block"><div class="btn-inner"><div class="btn-icon-w"><div class="btn-rive-w is-large w-embed"><canvas data-rive-object
-        data-rive-file="btn-ui"
-        data-rive-artboard="arrow"
-        data-rive-state-machine="arrow" 
-        data-rive-hover="false"
-        data-rive-fit="contain"  
-        >
-</canvas></div></div></div></a></div></div><div class="otot-home-text-col is-2"><div class="otot-home-text-w"><h2 data-anim-high="left, dark-green-tint-1" split-text="lines" class="text-impact-reg-brier">OFF<br/></h2><h2 data-anim-high="left, dark-green-tint-1" split-text="lines" class="text-impact-reg-mona line-increase">PLATFORM</h2></div><div class="otot-home-p-w is-2"><p split-text="lines" data-anim-high="left, dark-green-tint-1, 200" class="text-body-reg-mona"><strong>Games</strong>, AR filters, shaders and other experiments built for the joy of it</p></div><div><a title="Off Platform" data-btn-rive-rotate="false" data-btn-rive-hover="" href="https://quietwindow.netlify.app" class="btn-w icon-only w-inline-block"><div class="btn-inner"><div class="btn-icon-w"><div class="btn-rive-w is-large w-embed"><canvas data-rive-object
-        data-rive-file="btn-ui"
-        data-rive-artboard="arrow"
-        data-rive-state-machine="arrow" 
-        data-rive-hover="false"
-        data-rive-fit="contain"  
-        >
-</canvas></div></div></div></a></div></div></div></div><div class="otot-home-bg"><div class="otot-home-img-w is-1"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d18655b032045a4dc78e53_ln4-hp-lando-helmet.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d18655b032045a4dc78e53_ln4-hp-lando-helmet-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d18655b032045a4dc78e53_ln4-hp-lando-helmet.webp 834w" alt="Abdulqavi Mansuri wearing a lime helmet, side profile" class="otot-home-img is-helmet"/></div><div class="otot-home-img-w is-2"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d18655b032045a4dc78e56_ln4-hp-lando-head.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d18655b032045a4dc78e56_ln4-hp-lando-head-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d18655b032045a4dc78e56_ln4-hp-lando-head-p-800.webp 800w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d18655b032045a4dc78e56_ln4-hp-lando-head.webp 898w" alt="Abdulqavi Mansuri wearing a fleece side profile" class="otot-home-img"/></div></div></div></section></div><section data-otot-bottom="" class="s is-otot-end"><div class="otot-home-end-img-w"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302ff5ff89a9a4afb8c19e_ln-home-helm-large.webp" loading="lazy" alt="Lando lifting helmet up" class="image is-otot-home-end"/></div></section></div><div data-nav-theme-target="light" class="s-group bg-black"><section class="s home-helmets"><div class="c home-helmets"><div class="title-layout grid-main"><div id="w-node-_5d5ac04e-626f-e2bd-ba2c-8a1157b2eda4-0b17a7eb" class="title-headline-w flex"><h2 data-anim-high="" split-text="lines" class="text-title-lg-mona">Superbadges<br/></h2><h2 data-anim-high="" split-text="lines" class="text-title-lg-mona"><span class="text-title-lg-brier c-lime-off">Hall of Fame</span></h2></div><div id="w-node-_8734ac60-bf7c-ac47-bf21-501caa438859-0b17a7eb" class="title-para-w c-grey-on-track"><p data-anim-high="right, lime, 200" split-text="lines" class="text-body-reg-mona">From security to authentication, a growing wall of Trailhead superbadges and certifications — seven superbadges earned, 92 badges, 71,825 points, and the Admin cert loading.</p></div></div><div class="spacer _8-75rem m-6rem"></div><div class="w-dyn-list"><div data-helmet-grid="" role="list" class="helmet-grid w-dyn-items"><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b3e6c7ab86033cf172c_In-helm-2025-Season-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b3e6c7ab86033cf172c_In-helm-2025-Season-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b3e6c7ab86033cf172c_In-helm-2025-Season-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b3e6c7ab86033cf172c_In-helm-2025-Season-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b411c575b2f777125f6_In-helm-2025-Season-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b411c575b2f777125f6_In-helm-2025-Season-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b411c575b2f777125f6_In-helm-2025-Season-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Admin Cert · WIP</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2026</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b2259159e5170d2b923_In-helm-2025-Discoball-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b2259159e5170d2b923_In-helm-2025-Discoball-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b2259159e5170d2b923_In-helm-2025-Discoball-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b2259159e5170d2b923_In-helm-2025-Discoball-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b24037a1e7681195c20_In-helm-2025-Discoball-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b24037a1e7681195c20_In-helm-2025-Discoball-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b24037a1e7681195c20_In-helm-2025-Discoball-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b24037a1e7681195c20_In-helm-2025-Discoball-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Quiet Window</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2026</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305aff4692de3e7ea12251_In-helm-2025-DarkGlitter-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305aff4692de3e7ea12251_In-helm-2025-DarkGlitter-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305aff4692de3e7ea12251_In-helm-2025-DarkGlitter-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305aff4692de3e7ea12251_In-helm-2025-DarkGlitter-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b03644c91f0a8de407b_In-helm-2025-DarkGlitter-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b03644c91f0a8de407b_In-helm-2025-DarkGlitter-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b03644c91f0a8de407b_In-helm-2025-DarkGlitter-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b03644c91f0a8de407b_In-helm-2025-DarkGlitter-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Smart Friction</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2026</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305aeac44aa40f7bda5460_In-helm-2024-Season-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305aeac44aa40f7bda5460_In-helm-2024-Season-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305aeac44aa40f7bda5460_In-helm-2024-Season-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305af56183c37dfd14ff3f_In-helm-2024-Season-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305af56183c37dfd14ff3f_In-helm-2024-Season-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305af56183c37dfd14ff3f_In-helm-2024-Season-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305af56183c37dfd14ff3f_In-helm-2024-Season-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Expeditioner</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2025</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305acf3fccf71c6d72607b_In-helm-2024-Porcelain-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305acf3fccf71c6d72607b_In-helm-2024-Porcelain-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305acf3fccf71c6d72607b_In-helm-2024-Porcelain-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305acf3fccf71c6d72607b_In-helm-2024-Porcelain-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305ad3a594ec37bd1d32cb_In-helm-2024-Porcelain-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305ad3a594ec37bd1d32cb_In-helm-2024-Porcelain-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305ad3a594ec37bd1d32cb_In-helm-2024-Porcelain-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305ad3a594ec37bd1d32cb_In-helm-2024-Porcelain-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">92 Badges</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2025</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a980c399022066600a6_In-helm-2024-Japan-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a980c399022066600a6_In-helm-2024-Japan-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a980c399022066600a6_In-helm-2024-Japan-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a980c399022066600a6_In-helm-2024-Japan-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a9b1716264ea006064b_In-helm-2024-Japan-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a9b1716264ea006064b_In-helm-2024-Japan-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a9b1716264ea006064b_In-helm-2024-Japan-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a9b1716264ea006064b_In-helm-2024-Japan-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">71,825 Points</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2025</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a7d4e96d5f8f44f7803_In-helm-2024-GIF%20Helmet-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a7d4e96d5f8f44f7803_In-helm-2024-GIF%20Helmet-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a7d4e96d5f8f44f7803_In-helm-2024-GIF%20Helmet-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a7d4e96d5f8f44f7803_In-helm-2024-GIF%20Helmet-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a8e13a9b59a5e99cafe_In-helm-2024-GIF%20Helmet-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a8e13a9b59a5e99cafe_In-helm-2024-GIF%20Helmet-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a8e13a9b59a5e99cafe_In-helm-2024-GIF%20Helmet-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a8e13a9b59a5e99cafe_In-helm-2024-GIF%20Helmet-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">11 Trails</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2025</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a59417d51c0a58c32c6_In-helm-2024-DarkMode-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a59417d51c0a58c32c6_In-helm-2024-DarkMode-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a59417d51c0a58c32c6_In-helm-2024-DarkMode-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a59417d51c0a58c32c6_In-helm-2024-DarkMode-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a5cdaa389d0c080afc7_In-helm-2024-DarkMode-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a5cdaa389d0c080afc7_In-helm-2024-DarkMode-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a5cdaa389d0c080afc7_In-helm-2024-DarkMode-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a5cdaa389d0c080afc7_In-helm-2024-DarkMode-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">M.Sc. Weimar</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2025</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a459178b78319e05b55_In-helm-2023-Race%20100-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a459178b78319e05b55_In-helm-2023-Race%20100-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a459178b78319e05b55_In-helm-2023-Race%20100-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a459178b78319e05b55_In-helm-2023-Race%20100-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a47417d51c0a58c28a6_In-helm-2023-Race%20100-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a47417d51c0a58c28a6_In-helm-2023-Race%20100-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a47417d51c0a58c28a6_In-helm-2023-Race%20100-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a47417d51c0a58c28a6_In-helm-2023-Race%20100-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Security Specialist</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2023</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a2e3fccf71c6d71e5a8_In-helm-2023-Las%20Vegas-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a2e3fccf71c6d71e5a8_In-helm-2023-Las%20Vegas-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a2e3fccf71c6d71e5a8_In-helm-2023-Las%20Vegas-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a2e3fccf71c6d71e5a8_In-helm-2023-Las%20Vegas-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a3053985f797745cdfc_In-helm-2023-Las%20Vegas-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a3053985f797745cdfc_In-helm-2023-Las%20Vegas-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a3053985f797745cdfc_In-helm-2023-Las%20Vegas-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a3053985f797745cdfc_In-helm-2023-Las%20Vegas-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Business Admin</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2023</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a153de4a824d397d21d_In-helm-2023-Chrome-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a153de4a824d397d21d_In-helm-2023-Chrome-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a153de4a824d397d21d_In-helm-2023-Chrome-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a153de4a824d397d21d_In-helm-2023-Chrome-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a175a720573cbd3000f_In-helm-2023-Chrome-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a175a720573cbd3000f_In-helm-2023-Chrome-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a175a720573cbd3000f_In-helm-2023-Chrome-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305a175a720573cbd3000f_In-helm-2023-Chrome-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Reports &amp; Dashboards</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2023</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683053f61b468e794507c0a7_In-helm-2023-Beach%20Ball-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683053f61b468e794507c0a7_In-helm-2023-Beach%20Ball-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683053f61b468e794507c0a7_In-helm-2023-Beach%20Ball-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683053fb6e004f8218de7f11_In-helm-2023-Beach%20Ball-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683053fb6e004f8218de7f11_In-helm-2023-Beach%20Ball-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683053fb6e004f8218de7f11_In-helm-2023-Beach%20Ball-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683053fb6e004f8218de7f11_In-helm-2023-Beach%20Ball-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">User Authentication</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2023</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683052a8a475dfa06075ca17_In-helm-2022-Basketball-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683052a8a475dfa06075ca17_In-helm-2022-Basketball-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683052a8a475dfa06075ca17_In-helm-2022-Basketball-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683052a8a475dfa06075ca17_In-helm-2022-Basketball-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683052ab1073a33331767d2a_In-helm-2022-Basketball-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683052ab1073a33331767d2a_In-helm-2022-Basketball-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683052ab1073a33331767d2a_In-helm-2022-Basketball-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/683052ab1073a33331767d2a_In-helm-2022-Basketball-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Auth Settings</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2023</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305038652a87f86290bf3b_ln-helm-2021-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305038652a87f86290bf3b_ln-helm-2021-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305038652a87f86290bf3b_ln-helm-2021-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305038652a87f86290bf3b_ln-helm-2021-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b57817f019bc368a7b6_ln-helm-2021-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b57817f019bc368a7b6_ln-helm-2021-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305b57817f019bc368a7b6_ln-helm-2021-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Auth Troubleshooting</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2023</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305203f28384dcf8ef81cb_In-helm-2020-Silverstone-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305203f28384dcf8ef81cb_In-helm-2020-Silverstone-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305203f28384dcf8ef81cb_In-helm-2020-Silverstone-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305203f28384dcf8ef81cb_In-helm-2020-Silverstone-base.webp 823w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305223cddca8f1ea359a7a_In-helm-2020-Silverstone-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305223cddca8f1ea359a7a_In-helm-2020-Silverstone-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305223cddca8f1ea359a7a_In-helm-2020-Silverstone-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305223cddca8f1ea359a7a_In-helm-2020-Silverstone-hover.webp 823w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">MFA &amp; SSO</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2023</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div><div role="listitem" class="helmet-grid-item-w w-dyn-item"><div class="helmet-grid-item-w"><div data-helmet-item="" class="helmet-grid-item"><div class="helmet-grid-frame-w destop"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" 
-stroke="var(--color--lime)" stroke-width="2"/>
-</svg></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" 
-        stroke="currentColor" stroke-width="2"
-        vector-effect="non-scaling-stroke"
-        />
-</svg></div></div><div class="helmet-grid-frame-w mobile"><div class="helmet-grid-frame is-overlay w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="var(--color--lime)" stroke-width="2"/></div><div class="helmet-grid-frame is-base w-embed"><svg width="100%" height="100%" viewBox="0 0 187 188" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 .5h170.12a7.5 7.5 0 0 1 7.5 7.5v154.61a7.5 7.5 0 0 1-7.5 7.5H60.681a10.5 10.5 0 0 0-8.21 3.954l-7.86 9.858a9.5 9.5 0 0 1-7.427 3.578H8A7.5 7.5 0 0 1 .5 180V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="1"/></div></div><div class="helmet-grid-item-img-w"><div class="helmet-grid-item-img-helmet-w"><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305139c5020a27624aa793_In-helm-2019-base.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305139c5020a27624aa793_In-helm-2019-base-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305139c5020a27624aa793_In-helm-2019-base-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/68305139c5020a27624aa793_In-helm-2019-base.webp 822w" class="helmet-grid-item-img-helmet"/></div><img src="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/6830513c652a87f862917de3_In-helm-2019-hover.webp" loading="lazy" alt="" sizes="100vw" srcset="https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/6830513c652a87f862917de3_In-helm-2019-hover-p-500.webp 500w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/6830513c652a87f862917de3_In-helm-2019-hover-p-800.webp 800w, https://cdn.prod.website-files.com/67d97a68478fe87e30c67abe/6830513c652a87f862917de3_In-helm-2019-hover.webp 822w" class="helmet-grid-item-reveal-img"/></div></div><div class="helmet-grid-item-text-w"><h3 class="text-title-small-label text">Platform Foundations</h3><div class="helmet-grid-item-date-w"><div class="text-title-small-label date">2023</div></div><div class="helmet-grid-extender"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41c00f127bc68e2462635_ln4-2-helm-mask-extender-grey-fade.png 669w" alt="" class="helmet-grid-extender-img"/><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade-p-500.png 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67e41235ad69136bdc861b67_ln4-2-helm-mask-extender-lime-fade.png 669w" alt="" class="helmet-grid-extender-img is-overlay"/></div></div></div></div></div></div><div data-nav-theme-target="light" class="helmet-nav-theme-target"></div></div></section><section data-nav-theme-target="light" class="s"><div class="c is-callout"><div class="callout-layout"><div class="callout-rive-w"><div class="callout-icon w-embed"><canvas data-rive-object
+</canvas></div></div><div data-anim-high="right, lime" split-text="lines" class="text-eyebrow">salesforce trailblazer since 2022</div></div><div data-anim-high="right, lime-off" split-text="lines" class="text-impact-lg-mona"><strong>Automating</strong> orgs, shipping <strong>front-ends</strong>, bringing it all together. Building a <strong>craft</strong> in Salesforce on and off the platform.</div></div></div></section><section data-gl-change-to="white, dark-green-tint-1-low" data-horizontal-section="" data-h-color-from="dark-green" data-h-color-to="white" data-gl-change-track="" data-gl-change-from="dark-green, dark-green-tint-1" class="s is-horizontal-track"><div class="c is-horiz-scroll"><div class="horizontal-pin-wrap"><div class="horizontal-pin-spacer"><div class="horizontal-pin-sticky"><div class="horizontal-track"><!-- PLACEHOLDER COPY — panel 1 (dark-green side). Replace with final about-me text. --><div class="horizontal-grid-col large-img is-home1"><div class="horizontal-item-w is-text-callout callout-1"><div class="horizontal-item-layout"><div class="horizontal-item-text-layout"><div split-text="lines" class="horizontal-item-text">I’m Abdulqavi, a computer science student in Weimar. I build <span class="span-green-off-white-1">web applications</span> and <span class="span-green-off-white-1">developer tools</span>, and I automate Salesforce orgs.</div></div></div></div></div><!-- PLACEHOLDER COPY — panel 2 (white side). Replace with final about-me text. --><div class="horizontal-grid-col"><div class="horizontal-item-w is-text-callout is-home-callout-2"><div class="horizontal-item-layout"><div class="horizontal-item-text-layout"><div split-text="lines" class="horizontal-item-text c-dark-green-tint-1">I like work where research and building meet: measure how people behave, then ship something that fits. I’m looking for a <span class="c-dark-green-tint-1">Werkstudent role</span> to do both.</div></div></div></div></div></div></div></div></div></div><div data-nav-theme-target="dark" class="sticky-track-theme-change"></div></section><div data-nav-theme-target="light" class="s-group bg-black"><section class="s home-helmets"><div class="c home-helmets"><div class="title-layout grid-main"><div id="w-node-_5d5ac04e-626f-e2bd-ba2c-8a1157b2eda4-0b17a7eb" class="title-headline-w flex"><h2 data-anim-high="" split-text="lines" class="text-title-lg-mona">Latest <br/><span class="text-title-lg-brier c-lime-off">Work</span></h2></div></div><div class="spacer _8-75rem m-6rem"></div><div role="list" class="aq-work-list"><div role="listitem" class="aq-work-row"><h3 data-anim-high="" split-text="lines" class="aq-work-name">SHARP-Mini</h3><div class="aq-work-preview" aria-hidden="true"><div class="aq-work-preview-inner"><span class="aq-work-preview-mark">SM</span></div></div><div split-text="lines" class="aq-work-label">Salesforce · Apex &amp; LWC</div></div><div role="listitem" class="aq-work-row"><h3 data-anim-high="" split-text="lines" class="aq-work-name">Blockly for GitHub Actions</h3><div class="aq-work-preview" aria-hidden="true"><div class="aq-work-preview-inner"><span class="aq-work-preview-mark">BGA</span></div></div><div split-text="lines" class="aq-work-label">Developer Tooling</div></div><div role="listitem" class="aq-work-row"><h3 data-anim-high="" split-text="lines" class="aq-work-name">Operation Quiet Window</h3><div class="aq-work-preview" aria-hidden="true"><div class="aq-work-preview-inner"><span class="aq-work-preview-mark">OQW</span></div></div><div split-text="lines" class="aq-work-label">Game Development</div></div><div role="listitem" class="aq-work-row"><h3 data-anim-high="" split-text="lines" class="aq-work-name">SolarBot CRM</h3><div class="aq-work-preview" aria-hidden="true"><div class="aq-work-preview-inner"><span class="aq-work-preview-mark">SB</span></div></div><div split-text="lines" class="aq-work-label">Salesforce CRM</div></div></div><div data-nav-theme-target="light" class="helmet-nav-theme-target"></div></div></section><section data-nav-theme-target="light" class="s"><div class="c is-callout"><div class="callout-layout"><div class="callout-rive-w"><div class="callout-icon w-embed"><canvas data-rive-object
         data-rive-file="reef"
         data-rive-artboard="helmet-reef"
         data-rive-state-machine="helmet-reef_scroll" 
@@ -1630,19 +1947,27 @@ stroke="var(--color--lime)" stroke-width="2"/>
         data-rive-hover="false"
         data-rive-fit="contain"  
         >
-</canvas></div></div></div></a></div></div></section></div><section data-exe-section="" data-nav-theme-target="dark" data-designmode-white="" class="s is-lando-exe"><div data-exe-visor="" class="exe-top-visor"></div><div class="c is-lando-exe"><div class="spacer is-exe"></div><div class="grid-main exe-grid"><div id="w-node-ae7312fc-adb8-42d6-db91-b6f52466ac51-0b17a7eb" class="exe-text-w"><div class="g-title-layout"><div data-hide="t" class="eyebrow-w"><div class="eyebrow-icon-w"><div class="btn-icon-svg is-large w-embed"><svg width="100%" height="100%" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="m10.931 5.783-.759.812c-1.132 1.212-2.89 1.212-4.022 0l-.76-.812C4.313 4.637 2.568 5.29 2.275 6.928l-1.238 7.18c-.227 1.318.652 2.543 1.838 2.543h10.588c1.185 0 2.064-1.225 1.838-2.544l-1.239-7.179c-.28-1.638-2.037-2.29-3.116-1.145h-.014ZM10.839 3.048 9.84 1.849C8.894.717 7.43.717 6.484 1.85l-1 1.199" 
-        stroke="currentColor" 
-        stroke-width="1.949" 
-        stroke-miterlimit="10"/>
-</svg></div></div><div data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-eyebrow large">FEATURED PROJECT</div></div><div class="g-text-headline-w"><h2 data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-impact-lg-mona reduce">Operation Quiet <span class="span-font-brier otot">Window</span></h2></div><div class="g-text-para-w is-exe"><p data-anim-high="right, dark-green-tint-1, 200" split-text="lines" class="text-body-reg-mona">A browser stealth-puzzle game built with Phaser 3 by an Agile team of four — a fake web-page UI hand-rendered to a 2D canvas, a spatial X-ray scan mechanic, and a visual-novel dialog system in hand-written CSS.</p></div><a data-btn-rive-rotate="false" data-anim="text-hover" data-btn-rive-hover="" data-theme="lime" data-wf--button-primary--variant="base" href="https://quietwindow.netlify.app" target="_blank" class="btn-w w-inline-block"><div class="btn-inner"><div class="btn-inner-text-w"><div split-text="chars" class="btn-text">Play the demo</div></div><div class="btn-icon-w"><div class="btn-rive-w w-embed"><canvas data-rive-object
-        data-rive-file="btn-ui"
-        data-rive-artboard="arrow"
-        data-rive-state-machine="arrow" 
-        data-rive-hover="false"
-        data-rive-fit="contain"  
-        >
-</canvas></div></div></div></a></div><div class="exe-cta-img-w is-4"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be88faa89137717632c_lando-store-gold-2.webp" loading="lazy" alt="" class="image is-exe-scroll"/></div></div><div id="w-node-cdf8cae6-890c-0da2-d4ce-f7de7c4f7866-0b17a7eb" class="exe-col-2"><a class="aq-demo-card" href="https://quietwindow.netlify.app/" target="_blank" rel="noopener" aria-label="Play Operation Quiet Window"><div class="aq-demo-bar"><span></span><span></span><span></span><div class="aq-demo-url">quietwindow.netlify.app</div></div><div class="aq-demo-body"><div class="aq-demo-play">&#9654;</div><div class="aq-demo-label">Play the demo</div></div></a><div class="exe-cta-img-w is-1"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be7e803d4123abb47dd_lando-store-gold-5.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be7e803d4123abb47dd_lando-store-gold-5-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be7e803d4123abb47dd_lando-store-gold-5-p-800.webp 800w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be7e803d4123abb47dd_lando-store-gold-5-p-1080.webp 1080w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be7e803d4123abb47dd_lando-store-gold-5.webp 1260w" alt="" class="image is-exe-scroll"/></div><div class="exe-cta-img-w is-2"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be8f7e939c143a9bed6_lando-store-gold-3.webp" loading="lazy" width="Auto" sizes="100vw" alt="" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be8f7e939c143a9bed6_lando-store-gold-3-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be8f7e939c143a9bed6_lando-store-gold-3.webp 796w" class="image is-exe-scroll is-clip"/></div><div class="exe-cta-img-w is-3"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458be7e4ccfdba84b69d27_lando-store-gold-1.webp" loading="lazy" alt="" class="image is-exe-scroll"/></div><div class="exe-cta-sticker-w"><img src="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458c78c9825ebb795d2e81_LN1.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458c78c9825ebb795d2e81_LN1-p-500.webp 500w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458c78c9825ebb795d2e81_LN1-p-800.webp 800w, https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/69458c78c9825ebb795d2e81_LN1.webp 945w" alt="" class="image is-exe-sticker"/></div></div></div><div class="spacer _8rem"></div></div></section><section data-gl-change-trigger-start="top bottom" data-nav-theme-target="dark" data-gl-change-track="" data-gl-change-from="white, dark-green-tint-1-low" data-gl-change-to="white, white" data-designmode-white="" class="s is-home-collabs"><div class="c is-home-collabs"><div class="spacer _20rem tablet-reduce"></div><div class="title-layout grid-main"><div id="w-node-_10049719-af3a-791f-b004-78a94b8f2fac-0b17a7eb" class="title-headline-w flex"><h2 data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-title-lg-mona">skills</h2><h2 data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-title-lg-mona"><span class="text-title-lg-brier">&amp;tools</span></h2></div><div id="w-node-_04f46b3f-5093-ef67-5316-1ae3df93be8d-0b17a7eb" class="title-para-layout tablet-wrap"><div class="title-para-w mw flex-1"><p data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-body-reg-mona">Salesforce Flow and LWC, React and Tailwind, Unity and Phaser, Figma and Claude Code — a toolbox spanning platform configuration, front-end craft and AI-assisted development.</p></div><div class="display-none"><a data-btn-rive-rotate="false" data-anim="text-hover" data-btn-rive-hover="" data-theme="lime" data-wf--button-primary--variant="base" href="https://github.com/uniqavi" class="btn-w w-inline-block"><div class="btn-inner"><div class="btn-inner-text-w"><div split-text="chars" class="btn-text">view github</div></div><div class="btn-icon-w"><div class="btn-rive-w w-embed"><canvas data-rive-object
+</canvas></div></div></div></a></div></div></section></div><section data-exe-section="" data-nav-theme-target="dark" data-designmode-white="" class="s is-lando-exe"><div data-exe-visor="" class="exe-top-visor"></div><div class="c is-lando-exe"><div class="spacer is-exe"></div><!-- ── Research Section (task 7.3, markup only — task 7.4 styles it) ──
+     CLEARANCE WARNING FOR TASK 7.4: .spacer.is-exe is 8rem = 128px, exactly
+     the Visor's depth, but the Visor is an ellipse — at the horizontal CENTRE
+     it reaches its FULL depth, so the centered h2 below has ZERO clearance and
+     will sit under the curve. Do NOT add spacer divs here; solve it in
+     aq-declone with padding-top on .aq-research (or the head).
+
+     MEDIA PLACEHOLDER SWAP (deferred assets, req 7.6 — no markup or layout
+     change): inside .aq-research-media-inner, add as the LAST child
+         <img class="aq-research-media-img" src="/img/smart-home.webp" alt="">
+     The outer .aq-research-media holds the fixed aspect ratio, so the box,
+     its dimensions and every sibling position stay identical. The img is
+     absolutely positioned over the typographic mark by the pre-written
+     .aq-research-media-img rule, so the mark simply stops being visible.
+     Keep alt="" — the card is aria-hidden and the row's h3 + descriptor
+     already carry every piece of information (req 7.7).
+
+     Non-interactive by design (req 7.11): no a, no button, no tabindex, no
+     handlers — no research detail pages exist yet. Same call as the Project
+     List. Text-then-media in document order in BOTH rows so the <768px
+     stack (req 7.12) needs no order override. --><div class="aq-research"><div class="aq-research-head"><h2 data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-title-lg-mona"><span class="text-title-lg-brier">Research</span></h2></div><div class="aq-research-row is-research-1"><div class="aq-research-text"><h3 data-anim-high="right, dark-green-tint-1" split-text="lines" class="aq-research-name">Smart Home Access Control</h3><div data-anim-high="right, dark-green-tint-1" split-text="lines" class="aq-research-type">Mixed-Methods HCI Study</div></div><div class="aq-research-media" aria-hidden="true"><div class="aq-research-media-inner"><span class="aq-research-media-mark">SHAC</span></div></div></div><div class="aq-research-row is-research-2"><div class="aq-research-text"><h3 data-anim-high="right, dark-green-tint-1" split-text="lines" class="aq-research-name">Racing the Clock</h3><div data-anim-high="right, dark-green-tint-1" split-text="lines" class="aq-research-type">Physiological Computing Research</div></div><div class="aq-research-media" aria-hidden="true"><div class="aq-research-media-inner"><span class="aq-research-media-mark">RTC</span></div></div></div></div><div class="spacer _8rem"></div></div></section><section data-gl-change-trigger-start="top bottom" data-nav-theme-target="dark" data-gl-change-track="" data-gl-change-from="white, dark-green-tint-1-low" data-gl-change-to="white, white" data-designmode-white="" class="s is-home-collabs"><div class="c is-home-collabs"><div class="spacer _20rem tablet-reduce"></div><div class="title-layout grid-main"><div id="w-node-_10049719-af3a-791f-b004-78a94b8f2fac-0b17a7eb" class="title-headline-w flex"><h2 data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-title-lg-mona">skills</h2><h2 data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-title-lg-mona"><span class="text-title-lg-brier">&amp;tools</span></h2></div><div id="w-node-_04f46b3f-5093-ef67-5316-1ae3df93be8d-0b17a7eb" class="title-para-layout tablet-wrap"><div class="title-para-w mw flex-1"><p data-anim-high="right, dark-green-tint-1" split-text="lines" class="text-body-reg-mona">Salesforce Flow and LWC, React and Tailwind, Unity and Phaser, Figma and Claude Code — a toolbox spanning platform configuration, front-end craft and AI-assisted development.</p></div><div class="display-none"><a data-btn-rive-rotate="false" data-anim="text-hover" data-btn-rive-hover="" data-theme="lime" data-wf--button-primary--variant="base" href="https://github.com/uniqavi" class="btn-w w-inline-block"><div class="btn-inner"><div class="btn-inner-text-w"><div split-text="chars" class="btn-text">view github</div></div><div class="btn-icon-w"><div class="btn-rive-w w-embed"><canvas data-rive-object
         data-rive-file="btn-ui"
         data-rive-artboard="arrow"
         data-rive-state-machine="arrow" 
@@ -1845,16 +2170,19 @@ fill="currentColor"/>
   var t2 = document.querySelector('.aq-marquee-track-2');
 
   var clamp=function(v){ return v<0?0:v>1?1:v; };
-  var hTop=0, hLen=0, pBase=null, nBase=null;
+  var hTop=0, hLen=0, hMeasured=false, pBase=null, nBase=null;
+  /* Shader transition mapping across the CACHED horizontal-track scroll range.
+     The track now holds only two 100vw text panels behind a 100vh lead-in, so
+     its scroll length is ~2.6vh instead of the old multi-viewport montage.
+     __bgDark holds at 1.0 through the lead-in and while panel 1 is fully in
+     view (~0.385 of the range at 1440x900), then ramps linearly to exactly 0.0
+     at 60% of the cached length and stays there (Req 10.1, 10.2). */
+  var DARK_HOLD_FRAC=0.40, DARK_END_FRAC=0.60;
   // EYE_RATIO: vertical position of the eye-line within the portrait,
   // measured from the TOP as a fraction of portrait height (tuned for Portrait_No_BG.png).
   var EYE_RATIO=0.28;
   var w1 = 1200, w2 = 1200; // fallback marquee widths
   function measure(){
-    var vh=window.innerHeight, y=window.scrollY||window.pageYOffset;
-    hTop=vh*2.9; hLen=vh*3.6;
-    if(horiz){ var r=horiz.getBoundingClientRect(); if(y<vh){ hTop=r.top+y; hLen=r.height; } }
-    
     // Reset transforms temporarily before taking bounding box measurements to prevent reload-scroll bugs
     if(portrait) {
       var oldSx = portrait.style.getPropertyValue('--sx');
@@ -1894,6 +2222,30 @@ fill="currentColor"/>
   // once it does so pBase reflects the real rendered height.
   if(portrait && !portrait.complete){
     portrait.addEventListener('load', function(){ measure(); },{once:true});
+  }
+  /* ── Horizontal-track geometry cache ────────────────────────────────────
+     The section is GSAP-pinned (start:"top bottom", end:"bottom bottom" in
+     js/lando.gold-v3.js), so its live rect lies mid-scroll. Read it ONLY while
+     the document is still within one viewport of the top, cache the two
+     numbers, and never touch pinned layout geometry from apply() (Req 10.4).
+     A measurement that is missing, <=0, or absurd (>20vh) is discarded in
+     favour of viewport-derived fallbacks, silently (Req 10.6). A drift of more
+     than 1px replaces the cache and forces a recompute on the next frame
+     (Req 10.3). */
+  function measureTrack(){
+    var vh=window.innerHeight||800, y=window.scrollY||window.pageYOffset;
+    var top=hTop, len=hLen;
+    if(!hMeasured){ top=vh*2.9; len=vh*3.6; }
+    if(horiz && y<vh){
+      var r=horiz.getBoundingClientRect();
+      var mTop=r.top+y, mLen=r.height;
+      if(isFinite(mTop) && isFinite(mLen) && mLen>0 && mLen<=vh*20){
+        top=mTop; len=mLen; hMeasured=true;
+      }
+    }
+    if(Math.abs(top-hTop)>1 || Math.abs(len-hLen)>1){
+      hTop=top; hLen=len; lastY=-1;
+    }
   }
   function apply(){
     var y=window.scrollY||window.pageYOffset, vh=window.innerHeight, vw=window.innerWidth;
@@ -2001,14 +2353,19 @@ fill="currentColor"/>
 
     // ── 5. SHADER UNIFORMS
     //   __bgDark HOLDS at 1 from the start of the scroll/gather all the way through
-    //   the vertical hero exit, removing the semi-transparent "faded" frame opacity effect.
-    var lightenSpan=Math.min(hLen*0.3, vh*0.5);
-    var lightenEnd=hTop + lightenSpan;
+    //   the vertical hero exit, then releases across the horizontal track.
+    //   All offsets come from the CACHED track geometry — no layout reads here.
+    //   The track tween starts at "top bottom", i.e. one viewport of scroll
+    //   before the section's document top, so that is the range start.
+    var rangeStart=hTop - vh;
+    var lightenStart=rangeStart + hLen*DARK_HOLD_FRAC;
+    var lightenEnd=rangeStart + hLen*DARK_END_FRAC;
     var dark;
     if(y<gStart) dark=0;
-    else if(y<hTop) dark=1;                                   // HOLD fully dark green, no opacity effect
-    else if(y<lightenEnd) dark=1-(y-hTop)/lightenSpan;        // release across horizontal scroll start
-    else dark=0;
+    else if(y<=lightenStart) dark=1;                                        // HOLD fully dark green
+    else if(y<lightenEnd) dark=1-(y-lightenStart)/(lightenEnd-lightenStart); // release
+    else dark=0;                                                            // 0.0 at 60% and past range end
+    if(!(dark>0)) dark=0; else if(dark>1) dark=1;
     
     window.__bgDark=dark;
     window.__bgWinAmt=sf;
@@ -2046,9 +2403,255 @@ fill="currentColor"/>
     if(y!==lastY){ lastY=y; try{ apply(); }catch(err){ console.error('[hero-gather]',err); } }
     requestAnimationFrame(tick);
   }
-  window.addEventListener('resize',function(){ measure(); lastY=-1; },{passive:true});
-  measure(); apply(); requestAnimationFrame(tick);
-  setTimeout(function(){ measure(); lastY=-1; },1200);
+  // Hero bases re-measure on every resize event (cheap, unpinned). The pinned
+  // track is re-measured ONCE, 150ms after resize events stop, and once 1000ms
+  // after load — both no-ops for the cache unless scroll is still within one
+  // viewport of the top (Req 10.5).
+  var rzT=0;
+  window.addEventListener('resize',function(){
+    measure(); lastY=-1;
+    clearTimeout(rzT);
+    rzT=setTimeout(measureTrack,150);
+  },{passive:true});
+  measure(); measureTrack(); apply(); requestAnimationFrame(tick);
+  function settle(){ setTimeout(function(){ measure(); measureTrack(); lastY=-1; },1000); }
+  if(document.readyState==='complete') settle();
+  else window.addEventListener('load',settle,{once:true});
 })();
 </script>
-<script src="background.js"></script></body></html>
+<script src="background.js"></script>
+<script>
+/* Latest Work — Hover Preview pointer-follow (task 6.2).
+   Requirements: 5.3 (rAF settle <=400ms, never over the text), 5.5 (one card
+   at a time), 5.8 + 11.5 (Reduced Motion Gate), 11.4 (no listeners at all on
+   a Narrow Viewport), 5.9 / 5.11 (no focus stop, no keyboard path, nothing
+   conveyed only by the card), 5.12 (scroll / blur suppression).
+
+   The CSS already owns show/hide (:hover + opacity 180ms), centring,
+   pointer-events:none and the display:none opt-outs. It also already reads
+   --aq-pv-x / --aq-pv-y inside .aq-work-preview's transform, so this script
+   writes nothing but those two custom properties.
+
+   Scroll source: this page cannot trust native `scroll` — the hero-gather
+   script's own comment states Lenis eats scroll events when the page is
+   scrolled programmatically, and polls window.scrollY once per rAF instead.
+   That polling is the convention followed here (window.lenis is not defined
+   yet when this inline script parses: the bundle is `defer`red, so a late
+   one-shot hookup is attempted too). A passive native `scroll` listener is
+   kept as a third, free path. */
+(function(){
+  var list=document.querySelector('.aq-work-list'); if(!list) return;
+
+  var PAD=12;        // px kept clear between a card edge and a text edge
+  var VFOLLOW=0.5;   // vertical follow is halved: the card hugs the row middle
+  var VMAX=14;       // px hard cap on the vertical offset
+  var LERP=0.22;     // fraction closed per 16.667ms frame — see note below
+  var SNAP=0.5;      // px: closer than this counts as arrived
+  var SCROLL_EPS=2;  // px of scroll movement that counts as "the page scrolled"
+
+  /* Why 0.22 and not the hero parallax's 0.08.
+     Residual distance after n frames is d0 * (1-k)^n, and 400ms is 24 frames
+     at 60Hz. The widest jump possible is the full clamped travel span, ~534px
+     at 1440px and under 600px at 1920px. With k=0.22:
+       n = ln(2/600) / ln(0.78) = -5.704 / -0.2485 = 22.9 frames = 383ms  (<=400)
+       n for a 250px jump = 19.4 frames = 324ms
+     With the hero's k=0.08 the same 250px jump needs
+       ln(2/250)/ln(0.92) = 57.9 frames = 965ms — more than twice the budget,
+     which is why this loop uses a markedly higher factor.
+     The factor is applied per 16.667ms of real time rather than per frame
+     (k_eff = 1 - (1-LERP)^(dt/16.667)) so the 400ms guarantee also holds on a
+     30Hz or 120Hz display. */
+
+  var bound=false, raf=0, lastTs=0;
+  var hovered=null, box=null, suppressed=false, resizeT=0, lenisT=0;
+  var px=0, py=0, cx=0, cy=0;
+  var lastY=window.scrollY||window.pageYOffset;
+
+  function clamp(v,lo,hi){ return v<lo?lo:v>hi?hi:v; }
+
+  function gateOk(){
+    return matchMedia('(pointer:fine)').matches
+      && !matchMedia('(prefers-reduced-motion:reduce)').matches
+      && window.innerWidth>767;
+  }
+
+  /* One getBoundingClientRect pass per row entry (and per resize / per
+     suppression release), never per frame. Everything the loop needs is
+     reduced to five numbers.
+
+     Horizontal clamp: the card is centred on the row (left:50% + translate
+     -50%), so its centre sits at midX + --aq-pv-x. Keeping both card edges
+     inside the gap between the name and the label means
+       name.right + PAD + halfCard  <=  centre  <=  label.left - PAD - halfCard
+     and subtracting midX turns that into the offset range [minX, maxX].
+     If the gap is narrower than the card the range inverts; then both bounds
+     collapse onto the gap's midpoint and the card simply stops following. */
+  function measure(row){
+    var card=row.querySelector('.aq-work-preview');
+    var name=row.querySelector('.aq-work-name');
+    var label=row.querySelector('.aq-work-label');
+    if(!card||!name||!label) return null;
+    var half=(card.offsetWidth||0)/2; if(!half) return null;
+    var r=row.getBoundingClientRect();
+    var n=name.getBoundingClientRect();
+    var l=label.getBoundingClientRect();
+    var midX=r.left+r.width/2, midY=r.top+r.height/2;
+    var minX=(n.right+PAD+half)-midX;
+    var maxX=(l.left-PAD-half)-midX;
+    if(minX>maxX){ minX=maxX=(minX+maxX)/2; }
+    return { card:card, midX:midX, midY:midY, minX:minX, maxX:maxX,
+             maxY:Math.min(VMAX, Math.max(0, r.height/2-PAD)) };
+  }
+
+  function targetX(){ return clamp(px-box.midX, box.minX, box.maxX); }
+  function targetY(){ return clamp((py-box.midY)*VFOLLOW, -box.maxY, box.maxY); }
+
+  function write(){
+    if(!box) return;
+    box.card.style.setProperty('--aq-pv-x', cx.toFixed(2)+'px');
+    box.card.style.setProperty('--aq-pv-y', cy.toFixed(2)+'px');
+  }
+
+  /* Snap current to target with no easing. Used on row entry and on
+     suppression release — both moments happen while the card is at opacity 0
+     or fading in, so the jump cannot be seen. This is how req 5.5 is served:
+     a row that is left keeps its last offset (the card fades out in place
+     over 180ms, easing it back would read as an unexplained drift), and a row
+     that is entered discards that stale offset instead of sliding in from it. */
+  function snap(){ if(box){ cx=targetX(); cy=targetY(); write(); } }
+
+  function start(){ if(!raf){ lastTs=0; raf=requestAnimationFrame(loop); } }
+  function stop(){ if(raf){ cancelAnimationFrame(raf); raf=0; } }
+
+  function loop(ts){
+    raf=0;
+    if(!hovered||!box||suppressed) return;          // loop only lives while a row is hovered
+    var dt=lastTs?Math.min(ts-lastTs,50):16.667; lastTs=ts;
+    var k=1-Math.pow(1-LERP, dt/16.667);
+    var tx=targetX(), ty=targetY();
+    cx+=(tx-cx)*k; cy+=(ty-cy)*k;
+    if(Math.abs(tx-cx)<SNAP) cx=tx;
+    if(Math.abs(ty-cy)<SNAP) cy=ty;
+    write();
+    var y=window.scrollY||window.pageYOffset;       // the reliable scroll source on this page
+    if(Math.abs(y-lastY)>SCROLL_EPS){ lastY=y; suppress(); return; }
+    lastY=y;
+    raf=requestAnimationFrame(loop);
+  }
+
+  function enter(row){
+    box=measure(row);
+    if(!box){ hovered=null; return; }
+    hovered=row;
+    lastY=window.scrollY||window.pageYOffset;
+    snap();
+    start();
+  }
+
+  function leave(){
+    hovered=null; box=null;                          // offsets stay put: the card fades out in place
+    stop();
+  }
+
+  function suppress(){
+    if(suppressed||!hovered) return;
+    suppressed=true;
+    list.classList.add('is-suppressed');             // CSS reverts opacity + colours in 180ms
+    stop();
+  }
+
+  function release(){
+    if(!suppressed) return;
+    suppressed=false;
+    list.classList.remove('is-suppressed');
+    if(!hovered) return;
+    box=measure(hovered);                            // the page moved under the pointer: re-measure
+    if(!box){ hovered=null; return; }
+    lastY=window.scrollY||window.pageYOffset;
+    snap();
+    start();
+  }
+
+  function rowOf(node){
+    return (node&&node.closest)?node.closest('.aq-work-row'):null;
+  }
+
+  function onOver(e){
+    var row=rowOf(e.target);
+    if(!row||!list.contains(row)||row===hovered) return;
+    leave();
+    px=e.clientX; py=e.clientY;
+    enter(row);
+  }
+
+  /* pointerout fires before pointerover on the new target, so a direct
+     row-to-row move is handed to onOver above and only a genuine exit from
+     the list reaches leave(). */
+  function onOut(e){
+    var to=e.relatedTarget;
+    if(to&&list.contains(to)&&rowOf(to)) return;
+    leave();
+  }
+
+  function onMove(e){
+    px=e.clientX; py=e.clientY;
+    if(suppressed) release();                        // req 5.12: the next pointermove clears it
+    else if(hovered&&!raf) start();
+  }
+
+  function onScroll(){ suppress(); }
+  function onBlur(){ suppress(); }
+
+  function clearAll(){
+    var cards=list.querySelectorAll('.aq-work-preview');
+    for(var i=0;i<cards.length;i++){
+      cards[i].style.removeProperty('--aq-pv-x');
+      cards[i].style.removeProperty('--aq-pv-y');
+    }
+  }
+
+  function hookLenis(){
+    var L=window.lenis;
+    if(L&&typeof L.on==='function'&&!hookLenis.done){
+      try{ L.on('scroll',onScroll); hookLenis.done=true; }catch(err){}
+    }
+  }
+
+  function bind(){
+    if(bound) return; bound=true;
+    list.addEventListener('pointerover',onOver,{passive:true});
+    list.addEventListener('pointerout',onOut,{passive:true});
+    list.addEventListener('pointermove',onMove,{passive:true});
+    window.addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('blur',onBlur);
+    hookLenis();
+    if(!lenisT) lenisT=setTimeout(hookLenis,1500);  // the bundle is deferred; try once it is up
+  }
+
+  function unbind(){
+    if(!bound) return; bound=false;
+    list.removeEventListener('pointerover',onOver);
+    list.removeEventListener('pointerout',onOut);
+    list.removeEventListener('pointermove',onMove);
+    window.removeEventListener('scroll',onScroll);
+    window.removeEventListener('blur',onBlur);
+    leave();
+    suppressed=false;
+    list.classList.remove('is-suppressed');
+    clearAll();                                      // hand the card back to the plain CSS centre
+  }
+
+  function applyGate(){ if(gateOk()) bind(); else unbind(); }
+
+  window.addEventListener('resize',function(){
+    clearTimeout(resizeT);
+    resizeT=setTimeout(function(){
+      applyGate();                                   // re-evaluated across the 767px boundary
+      if(bound&&hovered){ box=measure(hovered); if(box) snap(); else leave(); }
+    },150);
+  },{passive:true});
+
+  applyGate();
+})();
+</script>
+</body></html>

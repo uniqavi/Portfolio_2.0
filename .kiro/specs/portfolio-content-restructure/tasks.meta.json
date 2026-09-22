@@ -1,0 +1,374 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Snapshot `index.html` before any edits": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804122
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102810164
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102939662
+      }
+    ],
+    "2.1 Remove every non-callout item from `.horizontal-track`": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804180
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102945296
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790103192988
+      }
+    ],
+    "2.2 Replace the two panels' copy with provisional placeholder text": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804205
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790103202649
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790103331446
+      }
+    ],
+    "2.3 Adjust track width/column CSS in aq-declone for two panels": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804233
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790103337333
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790103849857
+      }
+    ],
+    "3.1 Delete the `[data-otot-section]` subtree from `index.html`": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804262
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790103855415
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790104012948
+      }
+    ],
+    "3.2 Remove the now-dead OTOT CSS from aq-declone": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804288
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790104018001
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790104406701
+      }
+    ],
+    "3.3 Confirm the seam where OTOT was closes cleanly": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804312
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790104411435
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790104806702
+      }
+    ],
+    "4.1 Remove the helmet grid and rename the heading": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804338
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790104813889
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105117596
+      }
+    ],
+    "4.2 Remove the dead helmet-grid CSS from aq-declone": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804364
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105124835
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105452759
+      }
+    ],
+    "5.1 Add the four Project Rows markup": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804401
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105460548
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105704289
+      }
+    ],
+    "5.2 Style the rows and separators in aq-declone": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804422
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105709102
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105986536
+      }
+    ],
+    "6.1 Add the preview element and row highlight CSS": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804446
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105992855
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790106289492
+      }
+    ],
+    "6.2 Add the pointer-follow script in a new inline `<script>` before `</body>`": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804470
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790106295114
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790106714648
+      }
+    ],
+    "7.1 Remove the card and its copy": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804526
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790106720823
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790106958094
+      }
+    ],
+    "7.2 Remove the `.aq-demo-*` CSS from aq-declone": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804550
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790106966526
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790107062103
+      }
+    ],
+    "7.3 Add the Research heading and two rows": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804575
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790107066309
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790107250355
+      }
+    ],
+    "7.4 Style the alternating staggered layout and Media Placeholders": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804624
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790107256855
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790107692291
+      }
+    ],
+    "8. Checkpoint — page loads and scrolls end to end": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804645
+      }
+    ],
+    "9. Re-tune the Shader Transition to the shortened horizontal track": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804669
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790107700713
+      },
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790107957334
+      }
+    ],
+    "10. Verify on localhost (user-assisted)": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804694
+      }
+    ],
+    "11. Final checkpoint": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790102804744
+      }
+    ],
+    "2. Strip the horizontal track to two about-me panels": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790103849886
+      }
+    ],
+    "3. Remove the OTOT section": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790104806762
+      }
+    ],
+    "4. Convert the helmet grid section to \"Latest Work\"": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105452818
+      }
+    ],
+    "5. Build the Project List": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790105986566
+      }
+    ],
+    "6. Build the Hover Preview": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790106714677
+      }
+    ],
+    "7. Replace the featured project card with the Research Section": [
+      {
+        "executionId": "02d265df-8837-430c-89a6-a2f8e8df59fe",
+        "chatSessionId": "sess_cd54d038-e189-4a04-a9bb-970db8a70712",
+        "timestamp": 1790107692329
+      }
+    ]
+  }
+}
